@@ -1,55 +1,27 @@
 export interface IBaseQuestion {
     id: string;
-    label?: string;
     type: string;
+    label?: string;
     required?: boolean;
     placeholder?: string;
     description?: string;
-    options?: string[];
-    title: string;
-    warning: string;
-    errorMessage: string;
-    disabled?: boolean;
-    hidden?: boolean;
+    options?: string[] | ICheckboxOption[];
+    title?: string;
     validation?: {
         pattern?: RegExp;
         minLength?: number;
         maxLength?: number;
     };
-    disabledOptions?: string[];
-    showDescription?: boolean;
-    showWarning?: boolean;
-    showErrorMessage?: boolean;
-    showLabel?: boolean;
-    showTitle?: boolean;
-    showValidation?: boolean;
+    warning?: string;
 
     // Methods
-    validate(): boolean;
-    reset(): void;
+    validate?(): boolean;
+    reset?(): void;
     updateValue(value: unknown): void;
     getValue(): unknown;
-    getError(): string;
-    getWarning(): string;
-    getErrorMessage(): string;
-    getLabel(): string;
-    getPlaceholder(): string;
-    getDescription(): string;
-    getTitle(): string;
-    getOptions(): string[];
-    getValidationPattern(): RegExp;
-    getMinLength(): number;
-    getMaxLength(): number;
-    isRequired(): boolean;
-    isDisabled(): boolean;
-    isHidden(): boolean;
-    hasValidation(): boolean;
-    hasDescription(): boolean;
-    hasWarning(): boolean;
-    hasErrorMessage(): boolean;
-    hasLabel(): boolean;
-    hasTitle(): boolean;
-    hasValidationPattern(): boolean;
-    hasMinLength(): boolean;
-    hasMaxLength(): boolean;
+}
+
+export interface ICheckboxOption {
+    checked: boolean;
+    value?: string;
 }
