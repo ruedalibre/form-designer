@@ -1,26 +1,68 @@
 import React from "react";
+import { TextQuestion } from "../../Interfaces/IQuestionTypes";
 import styles from "./Text.module.scss";
-import { IBaseQuestion } from "../../Interfaces/IBaseQuestion";
 
-interface Text extends IBaseQuestion {
-    question: TextQuestion;
-    onChange: (value: string) => void;
+interface TextProps {
+  question: TextQuestion;
+  showDescription?: boolean;
+  showLabel?: boolean;
+  onChange: (id: string, value: string) => void;
 }
 
-export interface TextQuestion extends IBaseQuestion {
-    type: "text";
-    value: string;
-    placeholder: string;
-}
+const Text: React.FC<TextProps> = ({
+  question,
+  showDescription,
+  showLabel,
+  onChange,
+}) => {
+  const [showWarning, setShowWarning] = React.useState<boolean>(false);
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    question.updateValue(value);
+    onChange(question.id, value);
 
-const Text: React.FunctionComponent<Text> = ({ question, onChange }) => {
-    return (
-        <div className={styles.text}>
-            <label>{question.label}</label>
-            <input type="text" value={question.value} onChange={e => onChange(e.target.value)} placeholder={question.placeholder} />
+    if (question.validate && !question.validate()) {
+      setShowWarning(true);
+    } else {
+      setShowWarning(false);
+    }
+  };
+
+  return (
+    <>
+      <div className={styles.questionContainer}>
+        <div className={styles.questionLine}>
+          <p className={styles.questionTitle}>{question.title}</p>
+          <span className={styles.required}>
+            {question.required ? "*" : ""}
+          </span>
         </div>
-    );
-}
+
+        {showDescription && question.description && (
+          <p className={styles.textDescription}>{question.description}</p>
+        )}
+
+        <div className={styles.inputLine}>
+          {showLabel && question.label && (
+            <label htmlFor={question.id} className={styles.textLabel}>
+              {question.label}&nbsp;
+            </label>
+          )}
+          <input
+            className={styles.textInput}
+            type={question.type}
+            value={question.value}
+            placeholder={question.placeholder}
+            onChange={handleChange}
+          />
+        </div>
+        {showWarning && question.warning && (
+          <span className={styles.texdtWaring}>{question.warning}</span>
+        )}
+      </div>
+    </>
+  );
+};
 
 export default Text;

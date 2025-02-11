@@ -17,12 +17,12 @@ export interface CheckboxQuestion extends IBaseQuestion {
 
 export interface DateQuestion extends IBaseQuestion {
     type: "date";
-    value: Date;
+    value: string; 
 }
 
 export interface DateTimeQuestion extends IBaseQuestion {
     type: "datetime";
-    value: Date;
+    value: string; 
 }
 
 export interface DropdownQuestion extends IBaseQuestion {
