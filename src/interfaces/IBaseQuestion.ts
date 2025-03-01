@@ -23,5 +23,5 @@ export interface IBaseQuestion {
 export interface ICheckboxOption {
     checked: boolean;
     label: string;
-    value?: boolean;
+    value: boolean;
 }

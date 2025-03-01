@@ -5,20 +5,20 @@ import styles from "./Attachment.module.scss";
 
 interface IAttachmentProps {
   question: AttachmentQuestion;
-  showDesciption?: boolean;
+  showDescription?: boolean;
   showLabel?: boolean;
-  showWarning?: boolean;
+  showWarning: boolean;
 }
 
 const Attachment: React.FC<IAttachmentProps> = ({
   question,
-  showDesciption,
+  showDescription,
   showLabel,
-  showWarning,
+  showWarning: initialShowWarning = false,
 }) => {
   const [showWarning, setShowWarning] = useState<boolean>(initialShowWarning);
   const [files, setFiles] = useState<File[]>([]);
-  const fileInputRef = useRef<HTLMInputElement>(null);
+  const fileInputRef = React.useRef<HTMLInputElement>(null);
 
   const handleFileUpload = (): void => {
     if (fileInputRef.current) {
@@ -88,13 +88,6 @@ const Attachment: React.FC<IAttachmentProps> = ({
             onClick={handleFileUpload}
           >
             Adjuntar archivo
-          </button>
-          <button
-            type="button"
-            className={styles.removeFileButton}
-            onClick={() => handleRemoveFile(index)}
-          >
-            &times;
           </button>
         </div>
         {files.length > 0 && (
