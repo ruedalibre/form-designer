@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect}  from "react";
 import { DateQuestion } from "../../Interfaces/IQuestionTypes";
 import styles from "./Date.module.scss";
 
@@ -7,6 +7,7 @@ interface DateProps {
   showDescription?: boolean;
   showLabel?: boolean;
   onChange: (id: string, value: string) => void;
+  resetTrigger: boolean;
 }
 
 const Date: React.FC<DateProps> = ({
@@ -14,6 +15,7 @@ const Date: React.FC<DateProps> = ({
   showDescription,
   showLabel,
   onChange,
+  resetTrigger
 }) => {
   const [showWarning, setShowWarning] = React.useState<boolean>(false);
 
@@ -28,6 +30,14 @@ const Date: React.FC<DateProps> = ({
       setShowWarning(false);
     }
   };
+
+  useEffect(() => {
+    if (resetTrigger) {
+      question.reset?.();
+      onChange(question.id, question.getValue() as string);
+      setShowWarning(false);
+    }
+  }, [resetTrigger, question, onChange]);
 
   return (
     <>
@@ -50,7 +60,7 @@ const Date: React.FC<DateProps> = ({
           <input
             className={styles.dateInput}
             type={question.type}
-            value={question.value}
+            value={question.getValue() as string}
             onChange={handleChange}
           />
         </div>

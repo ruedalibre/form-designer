@@ -11,10 +11,9 @@ export interface IBaseQuestion {
         pattern?: RegExp;
         minLength?: number;
         maxLength?: number;
+        errorMessage?: string;
     };
-    warning?: string;
 
-    // Methods
     validate?(): boolean;
     reset?(): void;
     updateValue(value: unknown): void;
@@ -23,5 +22,6 @@ export interface IBaseQuestion {
 
 export interface ICheckboxOption {
     checked: boolean;
-    value?: string;
+    label: string;
+    value: boolean;
 }

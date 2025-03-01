@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { TextQuestion } from "../../Interfaces/IQuestionTypes";
 import styles from "./Text.module.scss";
 
@@ -7,6 +7,7 @@ interface TextProps {
   showDescription?: boolean;
   showLabel?: boolean;
   onChange: (id: string, value: string) => void;
+  resetTrigger: boolean;
 }
 
 const Text: React.FC<TextProps> = ({
@@ -14,6 +15,7 @@ const Text: React.FC<TextProps> = ({
   showDescription,
   showLabel,
   onChange,
+  resetTrigger
 }) => {
   const [showWarning, setShowWarning] = React.useState<boolean>(false);
 
@@ -28,6 +30,14 @@ const Text: React.FC<TextProps> = ({
       setShowWarning(false);
     }
   };
+
+  useEffect(() => {
+    if (resetTrigger) {
+      question.reset?.();
+      onChange(question.id, question.getValue() as string);
+      setShowWarning(false);
+    }
+  }, [resetTrigger, question, onChange]);
 
   return (
     <>
@@ -52,13 +62,13 @@ const Text: React.FC<TextProps> = ({
           <input
             className={styles.textInput}
             type={question.type}
-            value={question.value}
+            value={question.getValue() as string}
             placeholder={question.placeholder}
             onChange={handleChange}
           />
         </div>
-        {showWarning && question.warning && (
-          <span className={styles.texdtWaring}>{question.warning}</span>
+        {showWarning && question.validation?.errorMessage && (
+          <span className={styles.textWarning}>{question.validation.errorMessage}</span>
         )}
       </div>
     </>
