@@ -5,14 +5,20 @@ export interface TextQuestion extends IBaseQuestion {
     value: string;
 }
 
+export interface TextAreaQuestion extends IBaseQuestion {
+    type: "textarea";
+    value: string;
+}
+
 export interface AttachmentQuestion extends IBaseQuestion {
     type: "attachment";
-    value: File;
+    value: File | undefined;
 }
 
 export interface CheckboxQuestion extends IBaseQuestion {
     type: "checkbox";
     options: ICheckboxOption[];
+    value: ICheckboxOption[];
 }
 
 export interface DateQuestion extends IBaseQuestion {
@@ -52,6 +58,7 @@ export interface RadioQuestion extends IBaseQuestion {
     value: string;
 }
 
-export interface ResetQuestion extends IBaseQuestion {
-    type: "reset";
+export interface UrlQuestion extends IBaseQuestion {
+    type: "url";
+    value: string;
 }

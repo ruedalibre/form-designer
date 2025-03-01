@@ -11,6 +11,7 @@
     "sass": "sass --watch src/Styles/main.scss:src/Styles/main.css"
   },
   "dependencies": {
+    "@microsoft/sp-http": "^1.11.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^7.1.3"
